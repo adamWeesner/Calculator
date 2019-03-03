@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import java.math.BigDecimal
 
-class CalculatorLogic {
+class CalculatorLogicTests {
     @Test
     fun intAddWorks() {
         assertThat(Operation(Operator.PLUS, 2, 2).answer).isEqualTo(BigDecimal("4"))
@@ -63,5 +63,23 @@ class CalculatorLogic {
     @Test
     fun doubleAndIntDivideWorks() {
         assertThat(Operation(Operator.DIVIDE, 2.5, 2).answer).isEqualTo(BigDecimal("1.25"))
+    }
+
+    @Test
+    fun stringAddition() {
+        val formula = "2*2"
+        assertThat(Operation(formula).answer).isEqualTo(BigDecimal("4"))
+    }
+
+    @Test
+    fun verifyOperatorIsntThere(){
+        val formula = "20"
+        assertThat(formula.contains(Regex("(?=[/*+-])|(?<=[/*+-])"))).isFalse()
+    }
+
+    @Test
+    fun verifyOperatorIsThere(){
+        val formula = "20*2"
+        assertThat(formula.contains(Regex("(?=[/*+-])|(?<=[/*+-])"))).isTrue()
     }
 }
